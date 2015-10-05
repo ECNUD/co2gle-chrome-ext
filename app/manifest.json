@@ -1,0 +1,51 @@
+{
+  "name": "__MSG_appName__",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "__MSG_appDescription__",
+  "permissions": [
+    "tabs",
+    "webRequest",
+    "<all_urls>"
+  ],
+  "icons": {
+    "16": "images/icon-16.png",
+    "128": "images/icon-128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": [
+      "scripts/chromereload.js",
+      "scripts/background.js"
+    ]
+  },
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
+  "omnibox": {
+    "keyword": "co2gle chrome ext"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "scripts/contentscript.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "browser_action": {
+    "default_icon": {                    // optional
+      "19": "images/icon-16.png",           // optional
+      "38": "images/icon-128.png"            // optional
+    },
+    "default_title": "__MSG_appName__",      // optional; shown in tooltip
+    "default_popup": "popup.html"        // optional
+  }
+}

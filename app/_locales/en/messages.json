@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "ECNUD Co2gle",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "A chrome extension by the Enforced Conscious Network Usage Department to take control of your CO2 footprint",
+    "description": "The description of the application"
+  }
+}
