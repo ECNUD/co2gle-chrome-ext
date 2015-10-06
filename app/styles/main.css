@@ -40,7 +40,11 @@ body {
 #club_mate {
   width: 340px;
   height: auto;
-  padding: 5px 0px;
+  padding-top: 5px;
+}
+
+#historical_footprint {
+  margin-top: 8px;
 }
 
 .bottle {
