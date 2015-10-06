@@ -4,22 +4,49 @@
 
 // traffic data for current session per tab
 var trafficData = {};
+var persistentData = JSON.parse(localStorage.getItem('ECNUD')) || {};
+if (!persistentData.total) {
+	persistentData.total = {};
+}
 
 // CO2/Traffic Conversion: 1 MB / 0.722g CO2
 
 chrome.runtime.onInstalled.addListener(function (details) {
-  console.log('previousVersion', details.previousVersion);
+	console.log('previousVersion', details.previousVersion);
 });
 
 chrome.webRequest.onHeadersReceived.addListener(function (details) {
-  console.log('background cb', details, arguments, details.responseHeaders);
-  if (!trafficData[details.tabId]) {
-    trafficData[details.tabId] = 0;
-  }
-  for (var i = 0; i < details.responseHeaders.length; ++i) {
-    if (details.responseHeaders[i].name === 'Content-Length') {
-      trafficData[details.tabId] += parseInt(details.responseHeaders[i].value, 10);
-    }
-  }
+	if (typeof trafficData[details.tabId] === 'undefined') {
+		trafficData[details.tabId] = 0;
+	}
+	var contentLength = 0;
+
+	for (var i = 0; i < details.responseHeaders.length; ++i) {
+		if (details.responseHeaders[i].name.toLowerCase() === 'content-length') {
+			contentLength = parseInt(details.responseHeaders[i].value, 10);
+			break;
+		}
+	}
+
+	trafficData[details.tabId] += contentLength;
+
+	// Update historic data
+	if (details.tabId >= 0) {
+		chrome.tabs.get(details.tabId, function (tab) {
+			if (!tab || chrome.runtime.lastError) {
+				return;
+			}
+			var currentTab = tab;
+			var domain = currentTab.url.match(/^[\w-]+:\/*\[?([\w\.:-]+)\]?(?::\d+)?/)[1].replace('www.', '');
+			if (typeof persistentData.total[domain] === 'undefined') {
+				persistentData.total[domain] = 0;
+			}
+			persistentData.total[domain] += contentLength;
+		});
+	}
 }, { urls: ['<all_urls>'] }, ['responseHeaders']);
+
+chrome.windows.onRemoved.addListener(function () {
+	localStorage.setItem('ECNUD', JSON.stringify(persistentData));
+});
 //# sourceMappingURL=background.js.map

@@ -1,3 +1,61 @@
+@font-face {
+  font-family: 'Glyphicons Halflings';
+
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+html {
+  font-family: 'Glyphicons Halflings, sans-serif';
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
 body {
-  padding: 20px;
+  margin: 0;
+  color: #FFFFF5;
+  font-size: 13px;
+  line-height: 18px;
+  border-radius: 5px;
+}
+
+#main {
+  width: 350px;
+  height: auto;
+  background-color: #191918;
+  padding: 10px;
+}
+  
+#co2Visualization {
+  width: 182px;
+  height: 250px;
+  background-repeat: no-repeat;
+}
+  
+#co2History {
+  width: 250px;
+  height: 200px;
+}
+
+#club_mate {
+  width: 340px;
+  height: auto;
+  padding: 5px 0px;
+}
+
+.bottle {
+  background-image: url(/images/club_mate.png);
+  width: 17px;
+  height: 60px;
+  float: left;
+}
+
+.clear {
+  clear: both;
+  line-height: 0;
+  visibility: none;
+}
+ 
+ul {
+  padding: 2px 5px 2px 5px;      
 }
