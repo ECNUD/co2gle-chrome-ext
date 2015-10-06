@@ -15,6 +15,7 @@
   "default_locale": "en",
   "background": {
     "scripts": [
+      "scripts/fetchival.js",
       "scripts/chromereload.js",
       "scripts/background.js"
     ]

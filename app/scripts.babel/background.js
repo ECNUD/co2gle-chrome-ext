@@ -9,6 +9,8 @@ if(!persistentData.total){
 	persistentData.total = {};
 }
 
+var bytesToPush = 0;
+
 // CO2/Traffic Conversion: 1 MB / 0.722g CO2
 
 chrome.runtime.onInstalled.addListener(details => {
@@ -30,6 +32,7 @@ function(details) {
     }
 
     trafficData[details.tabId] += contentLength;
+    bytesToPush += contentLength;
 
     // Update historic data
     if(details.tabId >= 0){
@@ -50,3 +53,16 @@ function(details) {
 chrome.windows.onRemoved.addListener(function(){
 	localStorage.setItem('ECNUD', JSON.stringify(persistentData));
 });
+
+setInterval(function(){
+	console.log('checking bytes to push...');
+	if(bytesToPush > 0){
+		console.log('pushing');
+		fetchival('http://10.211.55.13:3000/pushVolume?bytes=' + bytesToPush, { responseAs: 'text' })
+			.get()
+  			.catch(function(err) {
+				console.log(err);
+			});
+		bytesToPush = 0; 
+	}
+}, 3000);
